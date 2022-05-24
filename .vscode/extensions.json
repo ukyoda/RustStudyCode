@@ -1,6 +1,6 @@
 {
     "recommendations": [
-        "rust-analyzer.rust-analyzer",
+        "rust-lang.rust-analyzer",
         "rust-lang.rust",
         "bungcip.better-toml"
     ]
