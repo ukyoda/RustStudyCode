@@ -1,3 +1,4 @@
+// Rustの関数名、変数名はスネークケースが慣例
 fn about_variable() {
     // 普通にletで変数を宣言すると再代入不可になる (imutable)
     let x = 5;
@@ -65,8 +66,71 @@ fn about_tuple_array() {
     println!("tuple is: {:?}", arr);
 }
 
+fn add(x: i32, y: i32) -> i32 {
+    // 最後の式の結果が暗黙的に戻り値になるっぽい。
+    // 文はNG（式でも、セミコロンをつけると文になるのでNG）。
+    // ちなみに、Rustは x = y = 12 みたいな書き方はNG
+    x + y
+}
+
+fn lets_use_scope() {
+    // {} でスコープを表せる。スコープの最後の行を式にすればそのスコープは式として扱われる
+    // 即時関数的な取り扱いと考えてよさそう (returnは使えないけどね)
+    let y = {
+        let x = 3;
+        x + 1
+    };
+
+    println!("The value of y is: {}", y);
+}
+
+fn control_flow(x: i32) {
+    if x % 2 == 0 {
+        println!("x is even");
+    } else {
+        println!("x is odd");
+    }
+
+    // ifは式としても使える(if 式)
+    let is_even = if x % 2 == 0 { true } else { false };
+    if is_even {
+        println!("x is even");
+    } else {
+        println!("x is odd");
+    }
+
+    // loopは無限ループ。breakで抜けることができる
+    let mut counter = 0;
+    loop {
+        counter += 1;
+        if counter > x {
+            break;
+        }
+        println!("counter is: {}", counter);
+    }
+    // while文も使えるよ
+    // whileは式で書けるのか？ → 書けなかった
+    counter = 0;
+    while counter < x {
+        counter += 1;
+        println!("counter is: {}", counter);
+    }
+
+    // forはPythonっぽい感じ
+    for number in 1..10 {
+        println!("{}!", number);
+    }
+
+    for number in (1..10).rev() {
+        println!("{}!", number);
+    }
+}
+
 fn main() {
     about_variable();
     about_types();
     about_tuple_array();
+    println!("add: 2 + 1 = {}", add(2, 1));
+    lets_use_scope();
+    control_flow(10)
 }
